@@ -1,0 +1,30 @@
+{
+    "name": "radweb/oauth-token-encoding",
+    "description": "Alternate Encoding for OAuth 2 Token Responses",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dan Harper",
+            "email": "hello@dans.email"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "psr/http-message": "^1.0",
+        "zendframework/zend-diactoros": "^1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8",
+        "mockery/mockery": "^0.9.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Radweb\\OAuthTokenEncoding\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Radweb\\OAuthTokenEncoding\\Tests\\": "tests"
+        }
+    }
+}
