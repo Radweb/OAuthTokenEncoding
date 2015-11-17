@@ -69,7 +69,7 @@ class LaravelOAuthExceptionHandlingMiddlewareTest extends TestCase {
 
 		return $middleware->handle($request, function() {
 			$e = new OAuthException('message here');
-			$e->errorType = 'type here';
+			$e->errorType = 'invalid_client';
 			$e->httpStatusCode = 401;
 			throw $e;
 		});

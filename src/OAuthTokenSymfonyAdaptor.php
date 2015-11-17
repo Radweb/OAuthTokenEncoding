@@ -28,11 +28,11 @@ class OAuthTokenSymfonyAdaptor {
 		return new self(new OAuthTokenEncoder, $request);
 	}
 
-	public function adapt($tokens, $status = 200)
+	public function adapt($tokens, $status = 200, $headers = [])
 	{
 		list($contentType, $body) = $this->encoder->encode($this->request->headers->get('Accept'), $tokens);
 
-		return new Response($body, $status, $this->getHeadersForResponse($contentType));
+		return new Response($body, $status, $this->getHeadersForResponse($contentType, $headers));
 	}
 
 }

@@ -32,11 +32,11 @@ class OAuthTokenPsrAdaptor {
 		return new self(new OAuthTokenEncoder, $request);
 	}
 
-	public function adapt($tokens, $status = 200)
+	public function adapt($tokens, $status = 200, $headers = [])
 	{
 		list($contentType, $body) = $this->encoder->encode($this->request->getHeader('Accept'), $tokens);
 
-		return new Response($this->asStream($body), $status, $this->getHeadersForResponse($contentType));
+		return new Response($this->asStream($body), $status, $this->getHeadersForResponse($contentType, $headers));
 	}
 
 	/**

@@ -27,10 +27,10 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	const JSON_BODY = '{"access_token":"2YotnFZFEjr1zCsicMWpAA","token_type":"example","expires_in":3600,"refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA","example_parameter":"example_value"}';
 
 
-	const XML_ERROR = '<oauth><error>type here</error><error_description>message here</error_description></oauth>';
+	const XML_ERROR = '<oauth><error>invalid_client</error><error_description>message here</error_description></oauth>';
 
-	const FORM_ERROR = 'error=type+here&error_description=message+here';
+	const FORM_ERROR = 'error=invalid_client&error_description=message+here';
 
-	const JSON_ERROR = '{"error":"type here","error_description":"message here"}';
+	const JSON_ERROR = '{"error":"invalid_client","error_description":"message here"}';
 
 }

@@ -2,9 +2,9 @@
 
 trait HeadersForResponsesTrait {
 
-	public function getHeadersForResponse($contentType)
+	public function getHeadersForResponse($contentType, $headers = [])
 	{
-		return ['Content-Type' => $contentType, 'Cache-Control' => 'no-store'];
+		return array_merge($headers, ['Content-Type' => $contentType, 'Cache-Control' => 'no-store']);
 	}
 
 }

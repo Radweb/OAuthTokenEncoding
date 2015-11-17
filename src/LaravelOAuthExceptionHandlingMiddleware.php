@@ -25,7 +25,7 @@ class LaravelOAuthExceptionHandlingMiddleware {
 			return $this->adaptors->make($request)->adapt([
 				'error' => $e->errorType,
 				'error_description' => $e->getMessage(),
-			], $e->httpStatusCode);
+			], $e->httpStatusCode, $e->getHttpHeaders());
 		}
 	}
 
