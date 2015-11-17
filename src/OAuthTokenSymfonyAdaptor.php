@@ -10,7 +10,7 @@ class OAuthTokenSymfonyAdaptor implements Adaptor {
 	use HeadersForResponsesTrait;
 
 	/**
-	 * @var Encoder
+	 * @var OAuthTokenEncoder
 	 */
 	private $encoder;
 
@@ -19,7 +19,7 @@ class OAuthTokenSymfonyAdaptor implements Adaptor {
 	 */
 	private $request;
 
-	public function __construct(Encoder $encoder, Request $request)
+	public function __construct(OAuthTokenEncoder $encoder, Request $request)
 	{
 		$this->encoder = $encoder;
 		$this->request = $request;

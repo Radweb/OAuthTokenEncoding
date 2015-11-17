@@ -12,7 +12,7 @@ class OAuthTokenPsrAdaptor implements Adaptor {
 	use HeadersForResponsesTrait;
 
 	/**
-	 * @var Encoder
+	 * @var OAuthTokenEncoder
 	 */
 	private $encoder;
 
@@ -21,7 +21,7 @@ class OAuthTokenPsrAdaptor implements Adaptor {
 	 */
 	private $request;
 
-	public function __construct(Encoder $encoder, RequestInterface $request)
+	public function __construct(OAuthTokenEncoder $encoder, RequestInterface $request)
 	{
 		$this->encoder = $encoder;
 		$this->request = $request;

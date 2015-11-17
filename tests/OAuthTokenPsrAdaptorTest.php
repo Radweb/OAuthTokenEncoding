@@ -2,7 +2,7 @@
 
 namespace Radweb\OAuthTokenEncoding\Tests;
 
-use Radweb\OAuthTokenEncoding\Encoder;
+use Radweb\OAuthTokenEncoding\OAuthTokenEncoder;
 use Radweb\OAuthTokenEncoding\OAuthTokenPsrAdaptor;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
@@ -20,7 +20,7 @@ class OAuthTokenPsrAdaptorTest extends TestCase {
 		$accept = 'the-accept-language';
 		$tokens = ['the' => 'tokens'];
 
-		$mockEncoder = m::mock(Encoder::class)
+		$mockEncoder = m::mock(OAuthTokenEncoder::class)
 			->shouldReceive('encode')
 			->with([$accept], $tokens)
 			->andReturn(['contentType', 'theBody'])

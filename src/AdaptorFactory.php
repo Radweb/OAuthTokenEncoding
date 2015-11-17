@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 class AdaptorFactory {
 
-	public function make($request, Encoder $encoder = null)
+	public function make($request, OAuthTokenEncoder $encoder = null)
 	{
 		$encoder = $encoder ?: new OAuthTokenEncoder;
 

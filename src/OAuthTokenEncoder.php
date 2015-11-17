@@ -2,7 +2,7 @@
 
 namespace Radweb\OAuthTokenEncoding;
 
-class OAuthTokenEncoder implements Encoder {
+class OAuthTokenEncoder {
 
 	const XML  = 'application/xml';
 	const JSON = 'application/json';
