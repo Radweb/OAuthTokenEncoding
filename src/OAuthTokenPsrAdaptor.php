@@ -9,9 +9,7 @@ use Zend\Diactoros\Stream;
 
 class OAuthTokenPsrAdaptor {
 
-	const XML  = 'application/xml';
-	const JSON = 'application/json';
-	const FORM = 'application/x-www-form-urlencoded';
+	use HeadersForResponsesTrait;
 
 	/**
 	 * @var OAuthTokenEncoder
@@ -23,7 +21,7 @@ class OAuthTokenPsrAdaptor {
 	 */
 	private $request;
 
-	public function __construct(OAuthTokenEncoder $encoder, RequestInterface $request)
+	public function __construct(OAuthTokenEncoderInterface $encoder, RequestInterface $request)
 	{
 		$this->encoder = $encoder;
 		$this->request = $request;
@@ -38,24 +36,11 @@ class OAuthTokenPsrAdaptor {
 	{
 		list($contentType, $body) = $this->encoder->encode($this->request->getHeader('Accept'), $tokens);
 
-		return $this->makeResponse($body, $contentType);
+		return new Response($this->asStream($body), 200, $this->getHeadersForResponse($contentType));
 	}
 
 	/**
 	 * @param string $body
-	 * @param string $contentType
-	 * @return Response
-	 */
-	private function makeResponse($body, $contentType)
-	{
-		return new Response($this->asStream($body), 200, [
-			'Content-Type' => $contentType,
-			'Cache-Control' => 'no-store',
-		]);
-	}
-
-	/**
-	 * @param $body
 	 * @return StreamInterface
 	 */
 	private function asStream($body)

@@ -12,7 +12,7 @@ composer require radweb\oauth-token-encoding
 
 ## Usage
 
-### Without PSR-7
+### Basic Usage
 
 ```php
 // grab the "Accept" header from your request and pass it in
@@ -34,9 +34,56 @@ list($contentType, $body) = $encoder->encode($accept, $oauthToken);
 // return a response using the given body & content type
 ```
 
+### With League's OAuth 2 Server
+
+The format returned by `League\OAuth2\Server\AuthorizationServer`'s `issueAccessToken` method can be passed through to the encoder.
+
+```php
+list($contentType, $body) = $encoder->encode($authorizationServer->issueAccessToken());
+```
+
+### With Symfony
+
+Given a Symfony HTTP Foundation request, the adaptor will check the `Accept` header of the request for `application/json`, `application/xml` or `application/x-www-form-urlencoded`. If none are found, it assumes JSON.
+
+```php
+$oauthToken = [
+	"access_token" => "2YotnFZFEjr1zCsicMWpAA",
+	"token_type" => "example",
+	"expires_in" => 3600,
+	"refresh_token" => "tGzv3JOkF0XG5Qx2TlKWIA",
+	"example_parameter" => "example_value",
+];
+
+// $request should be a HTTP Foundation request
+
+$adaptor = new OAuthTokenSymfonyAdaptor(new OAuthTokenEncoder, $request);
+// or..
+$adaptor = OAuthTokenSymfonyAdaptor::make($request);
+
+$response = $adaptor->adapt($oauthToken);
+
+// $response is now a HTTP Foundation response
+```
+
+#### With Laravel 4 / Lumen & [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
+
+```php
+use \LucaDegasperi\OAuth2Server\Authorizer;
+use \Radweb\OAuthTokenEncoding\OAuthTokenSymfonyAdaptor;
+
+Route::post('oauth/token', function(Authorizer $authorizer, OAuthTokenSymfonyAdaptor $adaptor) {
+	return $adaptor->adapt($authorizer->issueAccessToken());
+});
+```
+
+The response will contain the correctly encoded body, the correct `Content-Type` header and the `Cache-Control: no-store` header.
+
 ### With PSR-7
 
-Given a PSR-7 Request, the adaptor will check the `Accept` header of the request for `application/json`, `application/xml` or `application/x-www-form-urlencoded`. If none are found, it assumes JSON.
+> To construct a response, the `zendframework/zend-diactoros` package is required.
+
+Given a PSR-7 request, the adaptor will check the `Accept` header of the request for `application/json`, `application/xml` or `application/x-www-form-urlencoded`. If none are found, it assumes JSON.
 
 ```php
 $oauthToken = [
@@ -60,11 +107,9 @@ $response = $adaptor->adapt($oauthToken);
 
 The response will contain the correctly encoded body, the correct `Content-Type` header and the `Cache-Control: no-store` header.
 
-### With Laravel 5.1 & [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
+#### With Laravel 5.1 & [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
 
 First [configure Laravel](http://laravel.com/docs/5.1/requests#psr7-requests) to work with PSR-7 requests by installing two packages.
-
-The adaptor will check the `Accept` header of the request for `application/json`, `application/xml` or `application/x-www-form-urlencoded`. If none are found, it assumes JSON.
 
 ```php
 use \LucaDegasperi\OAuth2Server\Authorizer;
@@ -73,12 +118,4 @@ use \Radweb\OAuthTokenEncoding\OAuthTokenPsrAdaptor;
 Route::post('oauth/token', function(Authorizer $authorizer, OAuthTokenPsrAdaptor $adaptor) {
 	return $adaptor->adapt($authorizer->issueAccessToken());
 });
-```
-
-### With League's OAuth 2 Server
-
-The format returned by `League\OAuth2\Server\AuthorizationServer`'s `issueAccessToken` can be passed through to the adaptor.
-
-```php
-$adaptor->adapt($authorizationServer->issueAccessToken());
 ```
