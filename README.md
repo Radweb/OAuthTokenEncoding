@@ -66,7 +66,7 @@ $response = $adaptor->adapt($oauthToken);
 // $response is now a HTTP Foundation response
 ```
 
-##### With Laravel 4 / Lumen & [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
+##### With Laravel / Lumen [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
 
 ```php
 use \LucaDegasperi\OAuth2Server\Authorizer;
