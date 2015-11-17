@@ -34,7 +34,7 @@ list($contentType, $body) = $encoder->encode($accept, $oauthToken);
 // return a response using the given body & content type
 ```
 
-### With League's OAuth 2 Server
+##### With League's OAuth 2 Server
 
 The format returned by `League\OAuth2\Server\AuthorizationServer`'s `issueAccessToken` method can be passed through to the encoder.
 
@@ -66,7 +66,7 @@ $response = $adaptor->adapt($oauthToken);
 // $response is now a HTTP Foundation response
 ```
 
-#### With Laravel 4 / Lumen & [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
+##### With Laravel 4 / Lumen & [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
 
 ```php
 use \LucaDegasperi\OAuth2Server\Authorizer;
@@ -107,7 +107,7 @@ $response = $adaptor->adapt($oauthToken);
 
 The response will contain the correctly encoded body, the correct `Content-Type` header and the `Cache-Control: no-store` header.
 
-#### With Laravel 5.1 & [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
+##### With Laravel 5.1 & [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
 
 First [configure Laravel](http://laravel.com/docs/5.1/requests#psr7-requests) to work with PSR-7 requests by installing two packages.
 
