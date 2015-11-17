@@ -1,14 +1,16 @@
-<?php namespace Radweb\OAuthTokenEncoding;
+<?php
+
+namespace Radweb\OAuthTokenEncoding;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class OAuthTokenSymfonyAdaptor {
+class OAuthTokenSymfonyAdaptor implements Adaptor {
 
 	use HeadersForResponsesTrait;
 
 	/**
-	 * @var OAuthTokenEncoder
+	 * @var Encoder
 	 */
 	private $encoder;
 
@@ -17,7 +19,7 @@ class OAuthTokenSymfonyAdaptor {
 	 */
 	private $request;
 
-	public function __construct(OAuthTokenEncoderInterface $encoder, Request $request)
+	public function __construct(Encoder $encoder, Request $request)
 	{
 		$this->encoder = $encoder;
 		$this->request = $request;
@@ -28,7 +30,7 @@ class OAuthTokenSymfonyAdaptor {
 		return new self(new OAuthTokenEncoder, $request);
 	}
 
-	public function adapt($tokens, $status = 200, $headers = [])
+	public function adapt(array $tokens = [], $status = 200, array $headers = [])
 	{
 		list($contentType, $body) = $this->encoder->encode($this->request->headers->get('Accept'), $tokens);
 

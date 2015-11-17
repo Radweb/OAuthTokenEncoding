@@ -1,11 +1,13 @@
-<?php namespace Radweb\OAuthTokenEncoding;
+<?php
+
+namespace Radweb\OAuthTokenEncoding;
 
 use Psr\Http\Message\RequestInterface as PsrRequest;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 class AdaptorFactory {
 
-	public function make($request, OAuthTokenEncoderInterface $encoder = null)
+	public function make($request, Encoder $encoder = null)
 	{
 		$encoder = $encoder ?: new OAuthTokenEncoder;
 

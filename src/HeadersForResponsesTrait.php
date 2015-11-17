@@ -1,4 +1,6 @@
-<?php namespace Radweb\OAuthTokenEncoding;
+<?php
+
+namespace Radweb\OAuthTokenEncoding;
 
 trait HeadersForResponsesTrait {
 

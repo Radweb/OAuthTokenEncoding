@@ -1,4 +1,6 @@
-<?php namespace Radweb\OAuthTokenEncoding\Tests;
+<?php
+
+namespace Radweb\OAuthTokenEncoding\Tests;
 
 use League\OAuth2\Server\Exception\OAuthException;
 use Psr\Http\Message\ResponseInterface;

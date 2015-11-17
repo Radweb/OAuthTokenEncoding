@@ -2,7 +2,7 @@
 
 namespace Radweb\OAuthTokenEncoding\Tests;
 
-use Radweb\OAuthTokenEncoding\OAuthTokenEncoder;
+use Radweb\OAuthTokenEncoding\Encoder;
 use Mockery as m;
 use Radweb\OAuthTokenEncoding\OAuthTokenSymfonyAdaptor;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ class OAuthTokenSymfonyAdaptorTest extends TestCase {
 		$accept = 'the-accept-language';
 		$tokens = ['the' => 'tokens'];
 
-		$mockEncoder = m::mock(OAuthTokenEncoder::class)
+		$mockEncoder = m::mock(Encoder::class)
 			->shouldReceive('encode')
 			->with($accept, $tokens)
 			->andReturn(['contentType', 'theBody'])

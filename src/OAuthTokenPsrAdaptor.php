@@ -7,12 +7,12 @@ use Psr\Http\Message\StreamInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Stream;
 
-class OAuthTokenPsrAdaptor {
+class OAuthTokenPsrAdaptor implements Adaptor {
 
 	use HeadersForResponsesTrait;
 
 	/**
-	 * @var OAuthTokenEncoder
+	 * @var Encoder
 	 */
 	private $encoder;
 
@@ -21,7 +21,7 @@ class OAuthTokenPsrAdaptor {
 	 */
 	private $request;
 
-	public function __construct(OAuthTokenEncoderInterface $encoder, RequestInterface $request)
+	public function __construct(Encoder $encoder, RequestInterface $request)
 	{
 		$this->encoder = $encoder;
 		$this->request = $request;
@@ -32,7 +32,7 @@ class OAuthTokenPsrAdaptor {
 		return new self(new OAuthTokenEncoder, $request);
 	}
 
-	public function adapt($tokens, $status = 200, $headers = [])
+	public function adapt(array $tokens = [], $status = 200, array $headers = [])
 	{
 		list($contentType, $body) = $this->encoder->encode($this->request->getHeader('Accept'), $tokens);
 

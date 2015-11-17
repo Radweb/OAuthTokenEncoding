@@ -1,6 +1,8 @@
-<?php namespace Radweb\OAuthTokenEncoding;
+<?php
 
-interface OAuthTokenEncoderInterface {
+namespace Radweb\OAuthTokenEncoding;
+
+interface Encoder {
 
 	/**
 	 * @param string|string[] $accept
