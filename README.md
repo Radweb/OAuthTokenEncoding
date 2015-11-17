@@ -1,3 +1,5 @@
+[<img src="http://i.imgur.com/Qslhr5z.png" align="right" height="40">](https://radweb.co.uk)
+
 # OAuth 2 Token Encoder
 
 The OAuth 2 spec specifies token responses should be JSON. However XML users will be XML users so there's a draft spec extension which defines how OAuth responses should look in XML and Form Encoded formats:
