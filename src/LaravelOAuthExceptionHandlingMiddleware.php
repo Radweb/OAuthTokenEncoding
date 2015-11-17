@@ -7,13 +7,13 @@ use League\OAuth2\Server\Exception\OAuthException;
 class LaravelOAuthExceptionHandlingMiddleware {
 
 	/**
-	 * @var AdaptorFactory
+	 * @var LeagueOAuthExceptionFormatter
 	 */
-	private $adaptors;
+	private $formatter;
 
-	public function __construct(AdaptorFactory $adaptors)
+	public function __construct(LeagueOAuthExceptionFormatter $formatter)
 	{
-		$this->adaptors = $adaptors;
+		$this->formatter = $formatter;
 	}
 
 	public function handle($request, \Closure $next)
@@ -24,10 +24,7 @@ class LaravelOAuthExceptionHandlingMiddleware {
 		}
 		catch (OAuthException $e)
 		{
-			return $this->adaptors->make($request)->adapt([
-				'error' => $e->errorType,
-				'error_description' => $e->getMessage(),
-			], $e->httpStatusCode, $e->getHttpHeaders());
+			return $this->formatter->handle($e, $request);
 		}
 	}
 

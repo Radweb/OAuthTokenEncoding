@@ -2,79 +2,38 @@
 
 namespace Radweb\OAuthTokenEncoding\Tests;
 
+use Mockery as m;
 use League\OAuth2\Server\Exception\OAuthException;
-use Psr\Http\Message\ResponseInterface;
-use Radweb\OAuthTokenEncoding\AdaptorFactory;
 use Radweb\OAuthTokenEncoding\LaravelOAuthExceptionHandlingMiddleware;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Radweb\OAuthTokenEncoding\LeagueOAuthExceptionFormatter;
 use Zend\Diactoros\Request;
 
 class LaravelOAuthExceptionHandlingMiddlewareTest extends TestCase {
 
-	public function testSymfonyXML()
+	public function tearDown()
 	{
-		$this->handleSymfony(self::XML, self::XML_ERROR);
+		m::close();
 	}
 
-	public function testSymfonyForm()
+	public function testIt()
 	{
-		$this->handleSymfony(self::FORM, self::FORM_ERROR);
-	}
+		$e = new OAuthException('message here');
 
-	public function testSymfonyJSON()
-	{
-		$this->handleSymfony(self::JSON, self::JSON_ERROR);
-	}
+		$request = new Request;
 
-	public function testPsrXML()
-	{
-		$this->handlePsr(self::XML, self::XML_ERROR);
-	}
+		$mockFormatter = m::mock(LeagueOAuthExceptionFormatter::class)
+			->shouldReceive('handle')
+			->with($e, $request)
+			->andReturn('this is an example response')
+			->getMock();
 
-	public function testPsrForm()
-	{
-		$this->handlePsr(self::FORM, self::FORM_ERROR);
-	}
+		$middleware = new LaravelOAuthExceptionHandlingMiddleware($mockFormatter);
 
-	public function testPsrJSON()
-	{
-		$this->handlePsr(self::JSON, self::JSON_ERROR);
-	}
-
-	private function handleSymfony($type, $expectedBody)
-	{
-		$request = SymfonyRequest::create('http://example.com', 'POST');
-		$request->headers->set('Accept', $type);
-
-		$response = $this->runRequest($request);
-
-		$this->assertInstanceOf(SymfonyResponse::class, $response);
-		$this->assertEquals(401, $response->getStatusCode());
-		$this->assertEquals($expectedBody, (string) $response->getContent());
-	}
-
-	private function handlePsr($type, $expectedBody)
-	{
-		$request = new Request('http://example.com', 'POST', 'php://temp', ['Accept' => $type]);
-
-		$response = $this->runRequest($request);
-
-		$this->assertInstanceOf(ResponseInterface::class, $response);
-		$this->assertEquals(401, $response->getStatusCode());
-		$this->assertEquals($expectedBody, (string) $response->getBody());
-	}
-
-	private function runRequest($request)
-	{
-		$middleware = new LaravelOAuthExceptionHandlingMiddleware(new AdaptorFactory);
-
-		return $middleware->handle($request, function() {
-			$e = new OAuthException('message here');
-			$e->errorType = 'invalid_client';
-			$e->httpStatusCode = 401;
+		$response = $middleware->handle($request, function() use ($e) {
 			throw $e;
 		});
+
+		$this->assertEquals($response, 'this is an example response');
 	}
 
 }
