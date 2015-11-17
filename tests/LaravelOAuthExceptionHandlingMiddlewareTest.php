@@ -48,6 +48,7 @@ class LaravelOAuthExceptionHandlingMiddlewareTest extends TestCase {
 		$response = $this->runRequest($request);
 
 		$this->assertInstanceOf(SymfonyResponse::class, $response);
+		$this->assertEquals(401, $response->getStatusCode());
 		$this->assertEquals($expectedBody, (string) $response->getContent());
 	}
 
@@ -58,6 +59,7 @@ class LaravelOAuthExceptionHandlingMiddlewareTest extends TestCase {
 		$response = $this->runRequest($request);
 
 		$this->assertInstanceOf(ResponseInterface::class, $response);
+		$this->assertEquals(401, $response->getStatusCode());
 		$this->assertEquals($expectedBody, (string) $response->getBody());
 	}
 
@@ -68,6 +70,7 @@ class LaravelOAuthExceptionHandlingMiddlewareTest extends TestCase {
 		return $middleware->handle($request, function() {
 			$e = new OAuthException('message here');
 			$e->errorType = 'type here';
+			$e->httpStatusCode = 401;
 			throw $e;
 		});
 	}

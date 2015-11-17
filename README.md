@@ -4,6 +4,26 @@ The OAuth 2 spec specifies token responses should be JSON. However XML users wil
 
 https://tools.ietf.org/html/draft-richer-oauth-xml-01
 
+```json
+{
+	"access_token":"2YotnFZFEjr1zCsicMWpAA",
+	"token_type":"example",
+	"expires_in":3600
+}
+```
+
+```xml
+<oauth>
+	<access_token>2YotnFZFEjr1zCsicMWpAA</access_token>
+	<token_type>example</token_type>
+	<expires_in>3600</expires_in>
+</oauth>
+```
+
+```
+access_token=2YotnFZFEjr1zCsicMWpAA&token_type=example&expires_in=3600
+```
+
 ## Installation
 
 ```
@@ -119,3 +139,26 @@ Route::post('oauth/token', function(Authorizer $authorizer, OAuthTokenPsrAdaptor
 	return $adaptor->adapt($authorizer->issueAccessToken());
 });
 ```
+
+## Errors
+
+If you're using [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel) you can use the `LaravelOAuthExceptionHandlingMiddleware` instead of the one provided in that package.
+
+```xml
+<oauth>
+	<error>invalid_client</error>
+	<error_description>Client authentication failed.</error_description>
+</oauth>
+```
+
+```json
+{
+	"error": "invalid_client",
+	"error_description": "Client authentication failed.",
+}
+```
+
+```
+error=invalid_client&error_description=Client+authentication+failed.
+```
+
