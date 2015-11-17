@@ -144,18 +144,18 @@ Route::post('oauth/token', function(Authorizer $authorizer, OAuthTokenPsrAdaptor
 
 If you're using [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel) you can use the `LaravelOAuthExceptionHandlingMiddleware` instead of the one provided in that package.
 
+```json
+{
+	"error": "invalid_client",
+	"error_description": "Client authentication failed."
+}
+```
+
 ```xml
 <oauth>
 	<error>invalid_client</error>
 	<error_description>Client authentication failed.</error_description>
 </oauth>
-```
-
-```json
-{
-	"error": "invalid_client",
-	"error_description": "Client authentication failed.",
-}
 ```
 
 ```
