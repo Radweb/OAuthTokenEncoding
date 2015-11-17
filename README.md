@@ -4,7 +4,7 @@
 
 # OAuth 2 Token Encoder
 
-The OAuth 2 spec specifies token responses should be JSON. However XML users will be XML users so there's a draft spec extension which defines how OAuth responses should look in XML and Form Encoded formats:
+The OAuth 2 spec specifies token responses should be JSON. However [XML users will be XML users](https://twitter.com/DanHarper7/status/514822464673951744) so there's a draft spec extension which defines how OAuth responses should look in XML and Form Encoded formats:
 
 https://tools.ietf.org/html/draft-richer-oauth-xml-01
 
