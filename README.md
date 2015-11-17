@@ -1,5 +1,7 @@
 [<img src="http://i.imgur.com/Qslhr5z.png" align="right" height="40">](https://radweb.co.uk)
 
+[![Build Status](https://api.travis-ci.org/Radweb/OAuthTokenEncoding.svg)](https://travis-ci.org/Radweb/OAuthTokenEncoding) [![Latest Stable Version](https://poser.pugx.org/radweb/oauth-token-encoding/v/stable)](https://packagist.org/packages/radweb/oauth-token-encoding) [![License](https://poser.pugx.org/radweb/oauth-token-encoding/license)](https://packagist.org/packages/radweb/oauth-token-encoding)
+
 # OAuth 2 Token Encoder
 
 The OAuth 2 spec specifies token responses should be JSON. However XML users will be XML users so there's a draft spec extension which defines how OAuth responses should look in XML and Form Encoded formats:
