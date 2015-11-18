@@ -1,10 +1,11 @@
 <?php
 
-namespace Radweb\OAuthTokenEncoding\Tests;
+namespace Radweb\OAuthTokenEncoding\Tests\ResponseAdaptors;
 
+use Radweb\OAuthTokenEncoding\ResponseAdaptors\OAuthTokenSymfonyAdaptor;
 use Radweb\OAuthTokenEncoding\OAuthTokenEncoder;
 use Mockery as m;
-use Radweb\OAuthTokenEncoding\OAuthTokenSymfonyAdaptor;
+use Radweb\OAuthTokenEncoding\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -1,7 +1,8 @@
 <?php
 
-namespace Radweb\OAuthTokenEncoding;
+namespace Radweb\OAuthTokenEncoding\ResponseAdaptors;
 
+use Radweb\OAuthTokenEncoding\OAuthTokenEncoder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

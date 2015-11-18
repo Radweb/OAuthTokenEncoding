@@ -1,7 +1,8 @@
 <?php
 
-namespace Radweb\OAuthTokenEncoding;
+namespace Radweb\OAuthTokenEncoding\ResponseAdaptors;
 
+use Radweb\OAuthTokenEncoding\OAuthTokenEncoder;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Zend\Diactoros\Response;

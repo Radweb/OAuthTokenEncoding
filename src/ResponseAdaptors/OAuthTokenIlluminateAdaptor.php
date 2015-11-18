@@ -1,6 +1,6 @@
 <?php
 
-namespace Radweb\OAuthTokenEncoding;
+namespace Radweb\OAuthTokenEncoding\ResponseAdaptors;
 
 use Illuminate\Http\Response;
 

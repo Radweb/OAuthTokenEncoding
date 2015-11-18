@@ -1,11 +1,12 @@
 <?php
 
-namespace Radweb\OAuthTokenEncoding\Tests;
+namespace Radweb\OAuthTokenEncoding\Tests\ExceptionAdaptors;
 
 use Mockery as m;
 use League\OAuth2\Server\Exception\OAuthException;
-use Radweb\OAuthTokenEncoding\LaravelOAuthExceptionHandlingMiddleware;
-use Radweb\OAuthTokenEncoding\LeagueOAuthExceptionFormatter;
+use Radweb\OAuthTokenEncoding\ExceptionAdaptors\LaravelOAuthExceptionHandlingMiddleware;
+use Radweb\OAuthTokenEncoding\ExceptionAdaptors\LeagueOAuthExceptionFormatter;
+use Radweb\OAuthTokenEncoding\Tests\TestCase;
 use Zend\Diactoros\Request;
 
 class LaravelOAuthExceptionHandlingMiddlewareTest extends TestCase {

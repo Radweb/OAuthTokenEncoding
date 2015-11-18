@@ -1,12 +1,13 @@
 <?php
 
-namespace Radweb\OAuthTokenEncoding\Tests;
+namespace Radweb\OAuthTokenEncoding\Tests\ResponseAdaptors;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Radweb\OAuthTokenEncoding\ResponseAdaptors\OAuthTokenIlluminateAdaptor;
 use Radweb\OAuthTokenEncoding\OAuthTokenEncoder;
 use Mockery as m;
-use Radweb\OAuthTokenEncoding\OAuthTokenIlluminateAdaptor;
+use Radweb\OAuthTokenEncoding\Tests\TestCase;
 
 class OAuthTokenIlluminateAdaptorTest extends TestCase {
 

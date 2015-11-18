@@ -1,9 +1,10 @@
 <?php
 
-namespace Radweb\OAuthTokenEncoding\Tests;
+namespace Radweb\OAuthTokenEncoding\Tests\ResponseAdaptors;
 
+use Radweb\OAuthTokenEncoding\ResponseAdaptors\OAuthTokenPsrAdaptor;
 use Radweb\OAuthTokenEncoding\OAuthTokenEncoder;
-use Radweb\OAuthTokenEncoding\OAuthTokenPsrAdaptor;
+use Radweb\OAuthTokenEncoding\Tests\TestCase;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
 use Mockery as m;

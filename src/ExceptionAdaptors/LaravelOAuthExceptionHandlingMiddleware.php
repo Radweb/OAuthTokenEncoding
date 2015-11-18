@@ -1,6 +1,6 @@
 <?php
 
-namespace Radweb\OAuthTokenEncoding;
+namespace Radweb\OAuthTokenEncoding\ExceptionAdaptors;
 
 use League\OAuth2\Server\Exception\OAuthException;
 

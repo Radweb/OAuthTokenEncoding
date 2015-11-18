@@ -40,11 +40,11 @@ There's a basic `Radweb\OAuthTokenEncoding\OAuthTokenEncoder` class which when g
 
 There's also adaptors for common libraries which will respond with a correct Response object:
 
-* `Radweb\OAuthTokenEncoding\OAuthTokenIlluminateAdaptor` for Laravel
-* `Radweb\OAuthTokenEncoding\OAuthTokenSymfonyAdaptor` for Symfony
-* `Radweb\OAuthTokenEncoding\OAuthTokenPsrAdaptor` for any PSR-7 compatible libraries (although uses the `Zend\Diactoros` package as the implementation for the PSR-7 response)
+* `OAuthTokenIlluminateAdaptor` for Laravel
+* `OAuthTokenSymfonyAdaptor` for Symfony
+* `OAuthTokenPsrAdaptor` for any PSR-7 compatible libraries (although uses the `Zend\Diactoros` package as the implementation for the PSR-7 response)
 
-Finally, if you're using the `League\OAuth2\Server` package, there's a compatible `Radweb\OAuthTokenEncoding\LeagueOAuthExceptionFormatter` class for formatting exceptions from that library. If you're using it with Laravel, there's also `Radweb\OAuthTokenEncoding\LaravelOAuthExceptionHandlingMiddleware` for doing that automatically.
+Finally, if you're using the `League\OAuth2\Server` package, there's a compatible `LeagueOAuthExceptionFormatter` class for formatting exceptions from that library. If you're using it with Laravel, there's also `LaravelOAuthExceptionHandlingMiddleware` for doing that automatically.
 
 ### Basic Usage
 
@@ -106,7 +106,7 @@ The response will contain the correctly encoded body, the correct `Content-Type`
 
 ```php
 use \LucaDegasperi\OAuth2Server\Authorizer;
-use \Radweb\OAuthTokenEncoding\OAuthTokenIlluminateAdaptor;
+use \Radweb\OAuthTokenEncoding\ResponseAdaptors\OAuthTokenIlluminateAdaptor;
 
 Route::post('oauth/token', function(Authorizer $authorizer, OAuthTokenIlluminateAdaptor $adaptor) {
 	return $adaptor->adapt($authorizer->issueAccessToken());
