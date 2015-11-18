@@ -36,6 +36,16 @@ composer require radweb\oauth-token-encoding
 
 ## Usage
 
+There's a basic `Radweb\OAuthTokenEncoding\OAuthTokenEncoder` class which when given an `Accept` header and an array representing an OAuth token, will respond with the correct `Content-Type` header and the correctly encoded OAuth token.
+
+There's also adaptors for common libraries which will respond with a correct Response object:
+
+* `Radweb\OAuthTokenEncoding\OAuthTokenIlluminateAdaptor` for Laravel
+* `Radweb\OAuthTokenEncoding\OAuthTokenSymfonyAdaptor` for Symfony
+* `Radweb\OAuthTokenEncoding\OAuthTokenPsrAdaptor` for any PSR-7 compatible libraries (although uses the `Zend\Diactoros` package as the implementation for the PSR-7 response)
+
+Finally, if you're using the `League\OAuth2\Server` package, there's a compatible `Radweb\OAuthTokenEncoding\LeagueOAuthExceptionFormatter` class for formatting exceptions from that library. If you're using it with Laravel, there's also `Radweb\OAuthTokenEncoding\LaravelOAuthExceptionHandlingMiddleware` for doing that automatically.
+
 ### Basic Usage
 
 ```php
@@ -66,9 +76,9 @@ The format returned by `League\OAuth2\Server\AuthorizationServer`'s `issueAccess
 list($contentType, $body) = $encoder->encode($authorizationServer->issueAccessToken());
 ```
 
-### With Symfony
+### With Laravel / Lumen
 
-Given a Symfony HTTP Foundation request, the adaptor will check the `Accept` header of the request for `application/json`, `application/xml` or `application/x-www-form-urlencoded`. If none are found, it assumes JSON.
+Given an `Illuminate\Http\Request` object, the adaptor will check the `Accept` header of the request for `application/json`, `application/xml` or `application/x-www-form-urlencoded`. If none are found, it assumes JSON.
 
 ```php
 $oauthToken = [
@@ -79,29 +89,31 @@ $oauthToken = [
 	"example_parameter" => "example_value",
 ];
 
-// $request should be a HTTP Foundation request
+// $request should be a Illuminate\Http\Request
 
-$adaptor = new OAuthTokenSymfonyAdaptor(new OAuthTokenEncoder, $request);
+$adaptor = new OAuthTokenIlluminateAdaptor(new OAuthTokenEncoder, $request);
 // or..
-$adaptor = OAuthTokenSymfonyAdaptor::make($request);
+$adaptor = OAuthTokenIlluminateAdaptor::make($request);
 
 $response = $adaptor->adapt($oauthToken);
 
-// $response is now a HTTP Foundation response
+// $response is now an Illuminate\Http\Response
 ```
 
-##### With Laravel / Lumen [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
+The response will contain the correctly encoded body, the correct `Content-Type` header and the `Cache-Control: no-store` header.
+
+##### With [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
 
 ```php
 use \LucaDegasperi\OAuth2Server\Authorizer;
-use \Radweb\OAuthTokenEncoding\OAuthTokenSymfonyAdaptor;
+use \Radweb\OAuthTokenEncoding\OAuthTokenIlluminateAdaptor;
 
-Route::post('oauth/token', function(Authorizer $authorizer, OAuthTokenSymfonyAdaptor $adaptor) {
+Route::post('oauth/token', function(Authorizer $authorizer, OAuthTokenIlluminateAdaptor $adaptor) {
 	return $adaptor->adapt($authorizer->issueAccessToken());
 });
 ```
 
-The response will contain the correctly encoded body, the correct `Content-Type` header and the `Cache-Control: no-store` header.
+The format returned by `League\OAuth2\Server\AuthorizationServer`'s `issueAccessToken` method can be passed through to the encoder.
 
 ### With PSR-7
 
@@ -131,19 +143,6 @@ $response = $adaptor->adapt($oauthToken);
 
 The response will contain the correctly encoded body, the correct `Content-Type` header and the `Cache-Control: no-store` header.
 
-##### With Laravel 5.1 & [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel)
-
-First [configure Laravel](http://laravel.com/docs/5.1/requests#psr7-requests) to work with PSR-7 requests by installing two packages.
-
-```php
-use \LucaDegasperi\OAuth2Server\Authorizer;
-use \Radweb\OAuthTokenEncoding\OAuthTokenPsrAdaptor;
-
-Route::post('oauth/token', function(Authorizer $authorizer, OAuthTokenPsrAdaptor $adaptor) {
-	return $adaptor->adapt($authorizer->issueAccessToken());
-});
-```
-
 ## Errors
 
 If you're using [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2-server-laravel) you can use the `LaravelOAuthExceptionHandlingMiddleware` instead of the one provided in that package.
@@ -165,4 +164,3 @@ If you're using [Laravel OAuth 2 Server](https://github.com/lucadegasperi/oauth2
 ```
 error=invalid_client&error_description=Client+authentication+failed.
 ```
-

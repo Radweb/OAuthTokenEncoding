@@ -27,14 +27,21 @@ class OAuthTokenSymfonyAdaptor implements Adaptor {
 
 	public static function make(Request $request)
 	{
-		return new self(new OAuthTokenEncoder, $request);
+		return new static(new OAuthTokenEncoder, $request);
 	}
 
 	public function adapt(array $tokens = [], $status = 200, array $headers = [])
 	{
 		list($contentType, $body) = $this->encoder->encode($this->request->headers->get('Accept'), $tokens);
 
-		return new Response($body, $status, $this->getHeadersForResponse($contentType, $headers));
+		$responseClass = $this->getResponseClassName();
+
+		return new $responseClass($body, $status, $this->getHeadersForResponse($contentType, $headers));
+	}
+
+	protected function getResponseClassName()
+	{
+		return Response::class;
 	}
 
 }
