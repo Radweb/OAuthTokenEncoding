@@ -16,6 +16,13 @@ class OAuthTokenIlluminateAdaptorTest extends TestCase {
 		m::close();
 	}
 
+	public function testItTypeHintsForAnIlluminateRequestOtherwiseLaravelWontInjectTheCurrentRequest()
+	{
+		$type = (new \ReflectionClass(OAuthTokenIlluminateAdaptor::class))->getConstructor()->getParameters()[1]->getClass()->getName();
+
+		$this->assertEquals(Request::class, $type, 'Must type hint for ' . Request::class);
+	}
+
 	public function testItDelegatesToTheEncoderAndReturnsPsrResponseFromIt()
 	{
 		$accept = 'the-accept-language';
